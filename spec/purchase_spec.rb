@@ -51,4 +51,22 @@ describe Purchase do
       test_result.first['category_id'].should eq test_category.id.to_s
     end
   end
+
+  describe '.total_purchases' do
+    it 'should give us the total purchases amount' do
+      test_purchase1 = Purchase.create({'description' => 'burgers', 'amount' => 5, 'date' => '2004-10-19 10:23:54'})
+      test_purchase2 = Purchase.create({'description' => 'burgers', 'amount' => 20, 'date' => '2004-10-19 10:23:54'})
+      test_purchase3 = Purchase.create({'description' => 'burgers', 'amount' => 40, 'date' => '2004-10-19 10:23:54'})
+      Purchase.total_purchases.should eq 65
+    end
+  end
+
+  describe '.total_by_category' do
+    it 'will return the total amount for a category' do
+      test_purchase1 = Purchase.create({'description' => 'burgers', 'amount' => 5, 'category_id' => 1, 'date' => '2004-10-19 10:23:54'})
+      test_purchase2 = Purchase.create({'description' => 'burgers', 'amount' => 20, 'category_id' => 3, 'date' => '2004-10-19 10:23:54'})
+      test_purchase3 = Purchase.create({'description' => 'burgers', 'amount' => 40, 'category_id' => 1, 'date' => '2004-10-19 10:23:54'})
+      Purchase.total_by_category(3).should eq 20
+    end
+  end
 end
